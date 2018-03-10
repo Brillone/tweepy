@@ -88,7 +88,7 @@ Timeline methods
 
 .. method:: API.mentions_timeline([since_id], [max_id], [count])
 
-   Returns the 20 most recent mentions, including retweets. 
+   Returns the 20 most recent mentions, including retweets.
 
    :param since_id: |since_id|
    :param max_id: |max_id|
@@ -550,7 +550,7 @@ Help Methods
    :param since_id: |since_id|
    :param geocode: Returns tweets by users located within a given radius of the given latitude/longitude.  The location is preferentially taking from the Geotagging API, but will fall back to their Twitter profile. The parameter value is specified by "latitide,longitude,radius", where radius units must be specified as either "mi" (miles) or "km" (kilometers). Note that you cannot use the near operator via the API to geocode arbitrary locations; however you can use this geocode parameter to search near geocodes directly.
    :param show_user: When true, prepends "<user>:" to the beginning of the tweet. This is useful for readers that do not display Atom's author field. The default is false.
-   :rtype: list of :class:`SearchResult` objects
+   :rtype: list of :class:`SearchResults` objects
 
 
 List Methods
@@ -789,6 +789,16 @@ Geo Methods
 
    :param id: Valid Twitter ID of a location.
 
+
+Utility methods
+---------------
+
+.. method:: API.configuration()
+
+   Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutions, and t.co shortened URL length.
+   It is recommended applications request this endpoint when they are loaded, but no more than once a day.
+
+
 :mod:`tweepy.error` --- Exceptions
 ==================================
 
@@ -797,20 +807,20 @@ which means ``tweepy.error`` itself does not need to be imported. For
 example, ``tweepy.error.TweepError`` is available as ``tweepy.TweepError``.
 
 .. exception:: TweepError
-   
+
    The main exception Tweepy uses. Is raised for a number of things.
-   
+
    When a ``TweepError`` is raised due to an error Twitter responded with,
    the error code (`as described in the API documentation
    <https://dev.twitter.com/overview/api/response-codes>`_) can be accessed
-   at ``TweepError.message[0]['code']``. Note, however, that ``TweepError``\ s
+   at ``TweepError.response.text``. Note, however, that ``TweepError``\ s
    also may be raised with other things as message (for example plain
    error reason strings).
 
 .. exception:: RateLimitError
-   
+
    Is raised when an API method fails due to hitting Twitter's rate
    limit. Makes for easy handling of the rate limit specifically.
-   
+
    Inherits from :exc:`TweepError`, so ``except TweepError`` will
    catch a ``RateLimitError`` too.
